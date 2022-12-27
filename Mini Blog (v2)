@@ -1,0 +1,21 @@
+<?php
+
+// Öffne die Datei "b" und speichere ihren Inhalt in einem Array namens $lines
+$lines = file("b");
+
+// Iteriere über jede Zeile in der Datei
+foreach ($lines as $line) {
+  // Trenne die Zeile an jedem "|"-Zeichen und speichere das Ergebnis in einem Array namens $parts
+  $parts = explode("|", $line);
+  
+  // Gebe den Inhalt von $parts[0] in fett gedruckter Schrift aus
+  echo "<b>$parts[0]</b><br>";
+  
+  // Gebe den Inhalt von $parts[1] aus
+  echo "$parts[1]<br><br>";
+}
+
+?>
+
+
+Diese verbesserte Version des Codes ist leichter zu verstehen und zu warten, da sie klarere Variablennamen und eine einfache Schleife verwendet, um jede Zeile in der Datei zu bearbeiten.

@@ -2,6 +2,7 @@
 <html>
 <head>
 <style>
+/* Dieser CSS-Block definiert das Layout und das Aussehen der verschiedenen Elemente im HTML-Body */
 .container {
   display: flex;
   flex-direction: column;
@@ -39,65 +40,96 @@
 </head>
 <body>
 
+/* Dieses div-Element dient als Container für die übrigen Elemente */
 <div class="container">
+  /* Dieses div-Element zeigt den aktuellen Score und die Ressourcen an */
   <div class="score">
     Score: <span id="score">0</span>
-    | Resources: <span id="resources">0</span>
+    | Ressourcen: <span id="resources">0</span>
   </div>
-  <button id="clicker">Click me!</button>
+  /* Dieses Button-Element ermöglicht es dem Benutzer, den Score durch Klicken darauf zu erhöhen */
+  <button id="clicker">Klicke mich!</button>
 
+  /* Dieses div-Element dient als Container für die Shop-Artikel */
   <div class="store">
+    /* Dieses div-Element repräsentiert einen Shop-Artikel, der mit Ressourcen gekauft werden kann */
     <div class="store-item">
+      /* Dieses div-Element zeigt den Namen des Shop-Artikels an */
       <div class="store-item-name">Upgrade 1</div>
-      <div class="store-item-price">10 Resources</div>
-      <button class="store-item-button" data-price="10">Buy</button>
+      /* Dieses div-Element zeigt den Preis des Shop-Artikels in Ressourcen an */
+      <div class="store-item-price">10 Ressourcen</div>
+      /* Dieses Button-Element ermöglicht es dem Benutzer, den Shop-Artikel zum angegebenen Preis in Ressourcen zu kaufen */
+      <button class="store-item-button" data-price="10">Kaufen</button>
     </div>
+    /* Dieses div-Element repräsentiert einen Shop-Artikel, der mit Ressourcen gekauft werden kann */
     <div class="store-item">
+      /* Dieses div-Element zeigt den Namen des Shop-Artikels an */
       <div class="store-item-name">Upgrade 2</div>
-      <div class="store-item-price">20 Resources</div>
-      <button class="store-item-button" data-price="20">Buy</button>
+  /* Dieses div-Element zeigt den Preis des Shop-Artikels in Ressourcen an */
+      <div class="store-item-price">20 Ressourcen</div>
+      /* Dieses Button-Element ermöglicht es dem Benutzer, den Shop-Artikel zum angegebenen Preis in Ressourcen zu kaufen */
+      <button class="store-item-button" data-price="20">Kaufen</button>
     </div>
+    /* Dieses div-Element repräsentiert einen Shop-Artikel, der mit Ressourcen gekauft werden kann */
     <div class="store-item">
+      /* Dieses div-Element zeigt den Namen des Shop-Artikels an */
       <div class="store-item-name">Upgrade 3</div>
-      <div class="store-item-price">50 Resources</div>
-      <button class="store-item-button" data-price="50">Buy</button>
+      /* Dieses div-Element zeigt den Preis des Shop-Artikels in Ressourcen an */
+      <div class="store-item-price">50 Ressourcen</div>
+      /* Dieses Button-Element ermöglicht es dem Benutzer, den Shop-Artikel zum angegebenen Preis in Ressourcen zu kaufen */
+      <button class="store-item-button" data-price="50">Kaufen</button>
     </div>
   </div>
 </div>
 
 <script>
+/* Diese Konstante speichert eine Referenz zum score-Span-Element */
 const scoreEl = document.getElementById('score');
+/* Diese Konstante speichert eine Referenz zum resources-Span-Element */
 const resourcesEl = document.getElementById('resources');
+/* Diese Konstante speichert eine Referenz zum clicker-Button-Element */
 const clickerEl = document.getElementById('clicker');
 
+/* Diese Variable speichert den aktuellen Score */
 let score = 0;
+/* Diese Variable speichert die aktuellen Ressourcen */
 let resources = 0;
 
+/* Diese Funktion erhöht den Score um 1 und aktualisiert das score-Span-Element */
 const updateScore = () => {
   score++;
   scoreEl.textContent = score;
 };
 
+/* Diese Funktion erhöht die Ressourcen um 1 und aktualisiert das resources-Span-Element */
 const collectResource = () => {
   resources++;
   resourcesEl.textContent = resources;
 };
 
+/* Dieser Event-Listener führt die updateScore- und collectResource-Funktionen aus, wenn der clicker-Button geklickt wird */
 clickerEl.addEventListener('click', () => {
   updateScore();
   collectResource();
 });
 
+/* Diese Konstante speichert eine Referenz zu allen store-item-button-Button-Elementen */
 const storeItemButtons = document.querySelectorAll('.store-item-button');
+
+/* Diese Schleife fügt jedem store-item-button-Button-Element einen Event-Listener hinzu, der die folgende Funktion ausführt, wenn der Button geklickt wird */
 storeItemButtons.forEach(button => {
   button.addEventListener('click', event => {
+    /* Diese Variable speichert den Preis des geklickten Shop-Artikels */
     const price = event.target.dataset.price;
+    /* Diese Bedingung überprüft, ob der Benutzer genügend Ressourcen hat, um den Shop-Artikel zu kaufen */
     if (resources >= price) {
+      /* Wenn der Benutzer genügend Ressourcen hat, werden diese abgezogen und das resources-Span-Element aktualisiert */
       resources -= price;
       resourcesEl.textContent = resources;
-      console.log(`You have bought the item for ${price} resources.`);
+      console.log(`Sie haben den Artikel für ${price} Ressourcen gekauft.`);
     } else {
-      console.log('You do not have enough resources to buy this item.');
+      /* Wenn der Benutzer nicht genügend Ressourcen hat, wird eine entsprechende Meldung ausgegeben */
+      console.log('Sie haben nicht genügend Ressourcen, um diesen Artikel zu kaufen.');
     }
   });
 });

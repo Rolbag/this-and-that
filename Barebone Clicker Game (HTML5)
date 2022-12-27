@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="score">Score: <span id="score">0</span></div>
+  <button id="clicker">Click me!</button>
+</div>
+
+<script>
+const scoreEl = document.getElementById('score');
+const clickerEl = document.getElementById('clicker');
+
+let score = 0;
+
+const updateScore = () => {
+  score++;
+  scoreEl.textContent = score;
+};
+
+clickerEl.addEventListener('click', updateScore);
+</script>
+
+</body>
+</html>
+
+--------------
+
+Dieser Code definiert eine HTML-Seite mit einem Button und einem Score-Counter. Der Button hat einen Klick-Listener, der bei jedem Klick die Score-Variable um 1 erhöht und den Wert im Score-Counter aktualisiert.

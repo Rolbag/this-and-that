@@ -1,0 +1,150 @@
+import random
+import readline
+
+# Anzahl der Einwohner
+e = 100
+# Anzahl der Einwanderer
+ei = 5
+# Anzahl der Todesfälle
+t = 0
+# Menge an geerntetem Getreide
+gg = 4000
+# Menge an Getreide, die von Ratten gefressen wurde
+rg = 300
+# Menge an übrig gebliebenem Getreide
+lg = gg - rg
+# Jahreszahl
+j = 0
+# Größe des Landbesitzes
+l = 1000
+# Array für Jahreszahlen
+jz = ["ersten", "zweiten", "dritten", "vierten", "fuenften", "sechsten", "siebten", "achten", "neunten", "zehnten", "elften", "zwoelften", "dreizehnten", "vierzehnten", "fuenfzehnten"]
+
+def vorbereitungen():
+  global lg, rg, gg
+  # Menge an übrig gebliebenem Getreide berechnen
+  lg = gg - rg
+
+def interaktionMitNutzer():
+  global e, ei, t, gg, rg, lg, j, l
+  # Jahreszahl um 1 erhöhen
+  j += 1
+  print("\x1B[2J\x1B[15;0H\x1B[7m koenig \x1B[27m")
+  print("\x1B[2B\x1B[2Bjahresbericht fuer den koenig:")
+  print("\x1B[2B\x1B[2Bwir befinden uns im " + jz[j - 1] + " jahr.")
+  print("\x1B[2B\x1B[2Bin diesem jahr wurden:")
+  print("\x1B[2B" + str(e) + " einwohner registriert")
+  print("\x1B[2B" + str(ei) + " einwanderer aufgenommen")
+  print("\x1B[2B" + str(t) + " personen beerdigt")
+  print("\x1B[2Bvon deinen " + str(l) + " km^2 land")
+  print("\x1B[2B" + str(gg) + " kg getreide geerntet;")
+ print("\x1B[2B" + str(rg) + " haben die ratten gefressen.")
+print("\x1B[2B" + str(lg) + " kg sind noch uebrig.")
+print("\x1B[2Bbitte eine taste druecken !")
+# Warten, bis Nutzer eine Taste drückt
+a = input()
+if j == 15:
+  return
+# Zufälligen Landpreis berechnen
+lp = random.randint(1, 27)
+print("\x1B[2J\x1B[3B\x1B[3Blandpreis: " + str(lp) + " kg getreide")
+print("getreidevorrat: " + str(lg) + " kg")
+print("\x1B[2B\x1B[2Bwie viele km^2 land moechten sie dazu-")
+print("\x1B[2B\x1B[2Bkaufen ? sie koennen maximal " + str(lg // lp) + " km^2 land kaufen")
+# Eingabe abwarten
+a = input()
+# Eingabe in integer umwandeln
+try:
+  a = int(a)
+except ValueError:
+  a = 0
+# Prüfen, ob genug Getreide vorhanden ist
+if a > lg // lp:
+  a = lg // lp
+# Landbesitz erweitern
+l += a
+# Getreidemenge reduzieren
+lg -= a * lp
+# Einwohner um 5% des Landbesitzes erhöhen
+ei = int(l * 0.05)
+# Einwohner um Einwanderer erhöhen
+e += ei
+# Zufällige Anzahl an Todesfällen berechnen
+t = random.randint(0, e // 20)
+# Einwohner um Todesfälle reduzieren
+e -= t
+# Menge an geerntetem Getreide berechnen
+gg = l * random.randint(800, 1200)
+# Menge an Getreide, die von Ratten gefressen wurde, berechnen
+rg = random.randint(gg * 0.1, gg * 0.3)
+
+vorbereitungen
+def spielende():
+  print("\x1B[2J\x1B[0H{down}Spielende.")
+
+while True:
+  vorbereitungen()
+  interaktionMitNutzer()
+  if j == 15:
+    break
+
+spielende()
+
+-----------------------------------------------------------------
+
+Ein paar Gedanken zum erweitern
+-----------------------------------------------------------------
+
+import random
+
+def berechneSteuern(einwohner, getreidevorrat):
+  """Berechnet und gibt die Steuern in kg Getreide zurück, die von den Einwohnern
+  bezahlt werden müssen."""
+  steuern = einwohner * 0.1
+  return min(steuern, getreidevorrat)
+
+def erhoeheLandbesitz(landbesitz, getreidevorrat, landpreis):
+  """Erhöht den Landbesitz um eine bestimmte Anzahl km^2 und reduziert den
+  Getreidevorrat um den entsprechenden Betrag."""
+  # Eingabe abwarten
+  a = input("Wie viele km^2 Land möchtest du dazukaufen ? Du kannst maximal " +
+            str(getreidevorrat // landpreis) + " km^2 Land kaufen: ")
+  # Eingabe in integer umwandeln
+  try:
+    a = int(a)
+  except ValueError:
+    a = 0
+  # Prüfen, ob genug Getreide vorhanden ist
+  a = min(a, getreidevorrat // landpreis)
+  # Landbesitz erweitern
+  landbesitz += a
+  # Getreidemenge reduzieren
+  getreidevorrat -= a * landpreis
+  return landbesitz, getreidevorrat
+
+def verringereLandbesitz(landbesitz, getreidevorrat, landpreis):
+  """Reduziert den Landbesitz um eine bestimmte Anzahl km^2 und erhöht den
+  Getreidevorrat um den entsprechenden Betrag."""
+  # Eingabe abwarten
+  a = input("Wie viele km^2 Land möchtest du verkaufen ? Du besitzt " +
+            str(landbesitz) + " km^2 Land: ")
+  # Eingabe in integer umwandeln
+  try:
+    a = int(a)
+  except ValueError:
+    a = 0
+  # Prüfen, ob genug Land vorhanden ist
+  a = min(a, landbesitz)
+  # Landbesitz reduzieren
+  landbesitz -= a
+  # Getreidemenge erhöhen
+  getreidevorrat += a * landpreis
+  return landbesitz, getreidevorrat
+
+def erhoeheGetreidevorrat(getreidevorrat, getreidemenge):
+  """Erhöht den Getreidevorrat um eine bestimmte Menge."""
+  getreidevorrat += getreidemenge
+  return getreidevorrat
+
+def verringereGetreidevorrat
+

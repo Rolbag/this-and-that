@@ -9,7 +9,7 @@ $rg = 300;
 $lg = $gg - $rg;
 $j = 0;
 $l = 1000;
-$jz = array(
+$jz = [
   "ersten",
   "zweiten",
   "dritten",
@@ -25,12 +25,12 @@ $jz = array(
   "dreizehnten",
   "vierzehnten",
   "fuenfzehnten"
-);
+];
 
 while (true) {
   // Jahresbericht für den König
   $j++;
-  echo "\033[2J\033[15;1H\033[7m könig \033[0m\n\n";
+  echo chr(27) . "[2J" . chr(27) . "[1;1H" . chr(27) . "[7m könig " . chr(27) . "[0m\n\n";
   echo "Jahresbericht für den König:\n";
   echo "Wir befinden uns im " . $jz[$j - 1] . " Jahr.\n\n";
   echo "In diesem Jahr wurden:\n";

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.store {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.store-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.store-item-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.store-item-price {
+  font-size: 12px;
+  color: gray;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="score">
+    Score: <span id="score">0</span>
+    | Resources: <span id="resources">0</span>
+  </div>
+  <button id="clicker">Click me!</button>
+
+  <div class="store">
+    <div class="store-item">
+      <div class="store-item-name">Upgrade 1</div>
+      <div class="store-item-price">10 Resources</div>
+      <button class="store-item-button" data-price="10">Buy</button>
+    </div>
+    <div class="store-item">
+      <div class="store-item-name">Upgrade 2</div>
+      <div class="store-item-price">20 Resources</div>
+      <button class="store-item-button" data-price="20">Buy</button>
+    </div>
+    <div class="store-item">
+      <div class="store-item-name">Upgrade 3</div>
+      <div class="store-item-price">50 Resources</div>
+      <button class="store-item-button" data-price="50">Buy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const scoreEl = document.getElementById('score');
+const resourcesEl = document.getElementById('resources');
+const clickerEl = document.getElementById('clicker');
+
+let score = 0;
+let resources = 0;
+
+const updateScore = () => {
+  score++;
+  scoreEl.textContent = score;
+};
+
+const collectResource = () => {
+  resources++;
+  resourcesEl.textContent = resources;
+};
+
+clickerEl.addEventListener('click', () => {
+  updateScore();
+  collectResource();
+});
+
+const storeItemButtons = document.querySelectorAll('.store-item-button');
+storeItemButtons.forEach(button => {
+  button.addEventListener('click', event => {
+    const price = event.target.dataset.price;
+    if (resources >= price) {
+      resources -= price;
+      resourcesEl.textContent = resources;
+      console.log(`You have bought the item for ${price} resources.`);
+    } else {
+      console.log('You do not have enough resources to buy this item.');
+    }
+  });
+});
+</script>

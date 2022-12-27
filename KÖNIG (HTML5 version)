@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.title {
+  text-align: center;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.subtitle {
+  text-align: center;
+  font-style: italic;
+}
+.report {
+  margin-left: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="title">KOENIG</div>
+<div class="subtitle">jahresbericht fuer den koenig:</div>
+
+<div class="report">
+  Wir befinden uns im <span id="year"></span> jahr.
+  <br><br>
+  In diesem jahr wurden:
+  <ul>
+    <li><span id="population"></span> einwohner registriert</li>
+    <li><span id="immigrants"></span> einwanderer aufgenommen</li>
+    <li><span id="deaths"></span> personen beerdigt</li>
+  </ul>
+  Von deinen <span id="land"></span> km^2 land wurden
+  <ul>
+    <li><span id="harvested"></span> kg getreide geerntet</li>
+    <li><span id="eaten"></span> kg getreide von ratten gefressen</li>
+  </ul>
+  <span id="remaining"></span> kg getreide sind noch uebrig.
+</div>
+
+<button id="nextYear">naechstes jahr</button>
+
+<script>
+const yearEl = document.getElementById('year');
+const populationEl = document.getElementById('population');
+const immigrantsEl = document.getElementById('immigrants');
+const deathsEl = document.getElementById('deaths');
+const landEl = document.getElementById('land');
+const harvestedEl = document.getElementById('harvested');
+const eatenEl = document.getElementById('eaten');
+const remainingEl = document.getElementById('remaining');
+
+let year = 0;
+let population = 100;
+let immigrants = 5;
+let deaths = 0;
+let land = 1000;
+let harvested = 4000;
+let eaten = 300;
+let remaining = harvested - eaten;
+
+const jahrzahlen = ['ersten', 'zweiten', 'dritten', 'vierten', 'fuenften',
+                    'sechsten', 'siebten', 'achten', 'neunten', 'zehnten',
+                    'elften', 'zwoelften', 'dreizehnten', 'vierzehnten',
+                    'fuenfzehnten'];
+
+const updateValues = () => {
+  yearEl.textContent = jahrzahlen[year];
+  populationEl.textContent = population;
+  immigrantsEl.textContent = immigrants;
+  deathsEl.textContent = deaths;
+  landEl.textContent = land;
+  harvestedEl.textContent = harvested;
+  eatenEl.textContent = eaten;
+
+El.textContent = eaten;
+  remainingEl.textContent = remaining;
+};
+
+const nextYear = () => {
+  year++;
+  population += immigrants;
+  immigrants = Math.floor(Math.random() * 27) + 1;
+  deaths = Math.floor(Math.random() * population * 0.05);
+  population -= deaths;
+  harvested = Math.floor(Math.random() * 4000) + 1000;
+  eaten = Math.floor(Math.random() * harvested * 0.1);
+  remaining = harvested - eaten;
+
+  updateValues();
+};
+
+document.getElementById('nextYear').addEventListener('click', nextYear);
+updateValues();
+</script>
+
+</body>
+</html>
+
+-----------------
+Dieser Code definiert eine HTML-Seite mit einem Jahresbericht und einem Button, um das nächste Jahr zu simulieren. Der Jahresbericht zeigt die Anzahl der Einwohner, Einwanderer, Todesfälle, geerntetes Getreide, von Ratten gefressenes Getreide und den verbleibenden Getreidevorrat an. Der Button ruft eine Funktion auf, die das nächste Jahr simuliert, indem es zufällige Werte für die verschiedenen Variablen berechnet. Die Funktion aktualisiert auch die angezeigten Werte im Jahresbericht.

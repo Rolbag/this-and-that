@@ -1,0 +1,19 @@
+<?php
+// Erstelle eine anonyme Funktion, die einen String als Eingabe nimmt und ein einzelnes Zeichen aus dem String zurückgibt.
+// Das Zeichen wird zufällig ausgewählt, indem eine zufällige Nummer zwischen 0 und der Länge des Strings generiert wird.
+$random_char = create_function('$s','return substr($s,mt_rand(0,strlen($s)),1);');
+
+// Erstelle ein Array mit 16 Elementen, bei denen jedes Element den String "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" enthält.
+$char_array = array_fill(0,16,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+
+// Wandle jedes Element im Array in ein zufällig ausgewähltes Zeichen um, indem die Funktion "random_char" auf jedes Element angewendet wird.
+$random_string = array_map($random_char, $char_array);
+
+// Füge alle Zeichen des Arrays zu einem einzelnen String zusammen und gebe ihn aus.
+echo implode("", $random_string);
+
+// Schließe den PHP-Codeblock
+?>
+
+
+Dieser Code erstellt einen zufälligen 16-Zeichen-String, indem er zufällig ausgewählte Zeichen aus dem Alphabet, Großbuchstaben, Kleinbuchstaben und Zahlen auswählt. Es erstellt zunächst eine anonyme Funktion, die ein einzelnes Zeichen aus einem String auswählt und es zurückgibt. Dann erstellt es ein Array mit 16 Elementen, bei denen jedes Element den gleichen String enthält. Anschließend wird die Funktion "random_char" auf jedes Element im Array angewendet, um ein zufällig ausgewähltes Zeichen zu erhalten. Schließlich werden alle Zeichen des Arrays zu einem einzelnen String zusammengefügt und ausgegeben.

@@ -1,0 +1,150 @@
+<?php
+
+// Vorbereitungen
+$e = 100;
+$ei = 5;
+$t = 0;
+$gg = 4000;
+$rg = 300;
+$lg = $gg - $rg;
+$j = 0;
+$l = 1000;
+$jz = array(
+  "ersten",
+  "zweiten",
+  "dritten",
+  "vierten",
+  "fuenften",
+  "sechsten",
+  "siebten",
+  "achten",
+  "neunten",
+  "zehnten",
+  "elften",
+  "zwoelften",
+  "dreizehnten",
+  "vierzehnten",
+  "fuenfzehnten"
+);
+
+while (true) {
+  // Jahresbericht für den König
+  $j++;
+  echo "\033[2J\033[15;1H\033[7m könig \033[0m\n\n";
+  echo "Jahresbericht für den König:\n";
+  echo "Wir befinden uns im " . $jz[$j - 1] . " Jahr.\n\n";
+  echo "In diesem Jahr wurden:\n";
+  echo $e . "\tEinwohner registriert\n";
+  echo $ei . "\tEinwanderer aufgenommen\n";
+  echo $t . "\tPersonen beerdigt\n";
+  echo $l . " km²\tLand\n";
+  echo $gg . "\tkg Getreide geerntet;\n";
+  echo $rg . "\thaben die Ratten gefressen.\n";
+  echo $lg . "\tkg sind noch übrig.\n\n";
+  echo "Bitte eine Taste drücken!";
+  fgets(STDIN);
+
+// Landpreis und Getreidevorrat anzeigen
+$lp = mt_rand(1, 27) + 1;
+echo "Landpreis: " . $lp . " kg Getreide\n";
+echo "Getreidevorrat: " . $lg . " kg\n\n";
+
+// Frage, wie viel Land gekauft werden soll
+echo "Wie viele km² Land möchten Sie dazukaufen? Derzeitiger Besitz: " . $l . " km²\n";
+while (true) {
+  $an = readline("in km²: ");
+  if ($an * $lp < $lg) {
+    break;
+  }
+  echo "Schulden dürfen Sie keine machen!\n";
+}
+
+// Berechne neuen Getreidevorrat und Landbesitz
+if ($an > 0) {
+  $l += $an;
+  $lg -= $an * $lp;
+}
+
+echo "\nNeuer Getreidevorrat: " . $lg . " kg\n";
+
+// Frage, wie viel Getreide an die Einwohner verteilt werden soll
+echo "\nWieviel davon soll an die " . $e . " Einwohner verteilt werden?\n";
+while (true) {
+  $an = readline("in kg: ");
+  if ($an > $lg) {
+    echo "So viel haben Sie gar nicht!\n";
+  } elseif ($an < 10) {
+    echo "Die Menschen werden verhungern!\n";
+  } elseif ($lg - $an < 2) {
+    echo "Behalten Sie einen kleinen Vorrat!\n";
+  } else {
+    break;
+  }
+}
+
+// Berechne neuen Getreidevorrat
+$lg -= $an;
+echo "\nNeuer Getreidevorrat: " . $lg . " kg\n\n";
+echo "Bitte eine Taste drücken...";
+fgets(STDIN);
+
+// Zufällige Ereignisse
+$r = mt_rand(1, 6);
+
+if ($r === 1) {
+  // Hungersnot
+  echo "\033[2J\033[1;1H";
+  echo "Hungersnot!\n\n";
+  $t += $e / 4;
+  $e -= $e / 4;
+  $lg = (int)($lg / 2);
+} elseif ($r === 2) {
+
+echo "Seuche!\n\n";
+$t += $e / 3;
+$e -= $e / 3;
+
+} elseif ($r === 3) {
+  // Überflutung
+  echo "\033[2J\033[1;1H";
+  echo "Überflutung!\n\n";
+  $lg = (int)($lg / 2);
+
+} elseif ($r === 4) {
+  // Krieg
+  echo "\033[2J\033[1;1H";
+  echo "Krieg!\n\n";
+  $t += $e / 5;
+  $e -= $e / 5;
+  $lg = (int)($lg / 2);
+  $l = (int)($l / 2);
+
+} elseif ($r === 5) {
+  // Einwanderer
+  echo "\033[2J\033[1;1H";
+  echo "Einwanderer!\n\n";
+  $ei += mt_rand(10, 50);
+
+} elseif ($r === 6) {
+  // Geburten
+  echo "\033[2J\033[1;1H";
+  echo "Geburten!\n\n";
+  $e += mt_rand(10, 30);
+}
+
+// Neue Einwohnerzahl und Getreidevorrat anzeigen
+echo "Neue Einwohnerzahl: " . $e . "\n";
+echo "Neuer Getreidevorrat: " . $lg . " kg\n\n";
+
+// Ende des Jahres
+echo "Ende des Jahres. Bitte eine Taste drücken...";
+fgets(STDIN);
+
+// Endlosschleife verlassen, wenn das 15. Jahr erreicht wurde
+if ($j === 15) {
+  break;
+}
+
+}
+
+?>

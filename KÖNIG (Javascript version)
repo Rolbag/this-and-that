@@ -1,0 +1,118 @@
+// "**************"
+// "***        ***"
+// "*** KOENIG ***"
+// "***        ***"
+// "**************"
+
+// Leerzeile
+
+// Unterprogramm "Vorbereitungen" aufrufen
+vorbereitungen();
+// Unterprogramm "Interaktion mit Nutzer" aufrufen
+interaktionMitNutzer();
+// Unterprogramm "Spielende" aufrufen
+spielende();
+// Programm beenden
+process.exit();
+
+function vorbereitungen() {
+  // Anzahl der Einwohner initialisieren
+  var e = 100;
+  // Anzahl der Einwanderer initialisieren
+  var ei = 5;
+  // Anzahl der Todesfälle initialisieren
+  var t = 0;
+  // Menge an geerntetem Getreide initialisieren
+  var gg = 4000;
+  // Menge an Getreide, die von Ratten gefressen wurde
+  var rg = 300;
+  // Menge an übrig gebliebenem Getreide berechnen
+  var lg = gg - rg;
+  // Jahreszahl initialisieren
+  var j = 0;
+  // Größe des Landbesitzes initialisieren
+  var l = 1000;
+  // Array JZ$ für Jahreszahlen erstellen
+  var jz = [];
+  // Schleife für Einlesen von Jahreszahlen
+  for (var a = 0; a < 15; a++) {
+    // Jahreszahl einlesen
+    jz[a] = data[a];
+  }
+}
+
+function interaktionMitNutzer() {
+  // Jahreszahl um 1 erhöhen
+  j++;
+  console.log("\x1B[2J\x1B[15;0H\x1B[7m koenig \x1B[27m");
+  console.log("\x1B[2B\x1B[2Bjahresbericht fuer den koenig:");
+  console.log("\x1B[2B\x1B[2Bwir befinden uns im " + jz[j - 1] + " jahr.");
+  console.log("\x1B[2B\x1B[2Bin diesem jahr wurden:\x1B[2B");
+  console.log(e + "\t\t" + "einwohner registriert");
+  console.log(ei + "\t\t" + "einwanderer aufgenommen");
+  console.log(t + "\t\t" + "personen beerdigt");
+  console.log("\t\t" + "von deinen" + l + "km^2 land\x1B[2B");
+  console.log(gg + "\t\t" + "kg getreide geerntet;");
+  console.log(rg + "\t\t" + "haben die ratten gefressen.");
+  console.log(lg + "\t\t" + "kg sind noch uebrig.");
+  console.log("\t\t" + "\x1B[2B\x1B[2Bbitte eine taste druecken !");
+  // Warten, bis Nutzer eine Taste drückt
+  var a = readline.question("");
+  // Wenn das 15. Jahr erreicht wurde, Unterprogramm beenden
+  if (j === 15) {
+    return;
+  }
+  // Zufälligen Landpreis berechnen
+  var lp = Math.floor(Math.random() * 27) + 1;
+  console.log("\x1B[2J\x1B[3B\x1B[3Blandpreis: " + lp + "kg getreide");
+  console.log("getreidevorrat: " + lg + "kg");
+  console.log("\x1B[2B\x1B[2Bwie viele km^2 land moechten sie dazu-");
+  console.log("kaufen (0 fuer keinen kauf) ?");
+  // Warten, bis Nutzer eine Zahl eingibt
+  var k = readline.question("");
+  // Wenn Nutzer kein Land kaufen möchte, Unterprogramm fortsetzen
+  if (k === 0) {
+    interaktionMitNutzer();
+  }
+ // Wenn Nutzer Land kaufen möchte, aber nicht genug Getreide hat, Fehlermeldung ausgeben
+if (k * lp > lg) {
+console.log("\x1B[2J\x1B[2B\x1B[2Bzu wenig getreide !");
+interaktionMitNutzer();
+}
+// Landkauf ausführen
+l += k;
+lg -= k * lp;
+console.log("\x1B[2J\x1B[2B\x1B[2Blandkauf durchgefuehrt.");
+// Zufällige Anzahl von Einwohnern, die sterben oder neu ankommen
+t = Math.floor(Math.random() * 16);
+ei = Math.floor(Math.random() * 16);
+e -= t;
+e += ei;
+// Menge an geerntetem Getreide berechnen
+gg = Math.floor(l / 10);
+// Menge an Getreide, die von Ratten gefressen wurde, berechnen
+rg = Math.floor(Math.random() * (gg + 1));
+// Menge an übrig gebliebenem Getreide berechnen
+lg = gg - rg;
+// Unterprogramm fortsetzen
+interaktionMitNutzer();
+
+function spielende() {
+console.log("\x1B[2J\x1B[15;0H\x1B[7m koenig \x1B[27m");
+console.log("\x1B[2B\x1B[2Bjahresbericht fuer den koenig:");
+console.log("\x1B[2B\x1B[2Bdu bist im " + jz[j - 1] + " jahr gestorben.");
+console.log("\x1B[2B\x1B[2Bes sind noch " + e + " einwohner uebrig.");
+console.log("\x1B[2B\x1B[2Bdein landbesitz betrug " + l + " km^2.");
+console.log("\x1B[2B\x1B[2Bdu hattest " + lg + " kg getreide.");
+console.log("\x1B[2B\x1B[2Bdein name wird in den annalen");
+console.log("\x1B[2B\x1B[2Bdes reiches weiterleben.");
+console.log("\x1B[2B\x1B[2Bbitte eine taste druecken !");
+// Warten, bis Nutzer eine Taste drückt
+var a = readline.question("");
+console.log("\x1B[2J");
+process.exit();
+}
+
+vorbereitungen();
+interaktionMitNutzer();
+spielende();

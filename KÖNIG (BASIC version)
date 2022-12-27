@@ -1,0 +1,89 @@
+10 REM "**************"
+20 REM "***        ***"
+30 REM "*** KOENIG ***"
+40 REM "***        ***"
+50 REM "**************"
+
+60 REM Leerzeile
+
+70 GOSUB 1000   ' Unterprogramm "Vorbereitungen" aufrufen
+80 GOSUB 2000   ' Unterprogramm "Interaktion mit Nutzer" aufrufen
+90 GOSUB 3000   ' Unterprogramm "Spielende" aufrufen
+100 END         ' Programm beenden
+
+1000 REM
+1010 REM *** VORBEREITUNGEN ***
+1020 REM
+1030 E=100   ' Anzahl der Einwohner initialisieren
+1040 EI=5    ' Anzahl der Einwanderer initialisieren
+1050 T=0     ' Anzahl der Todesfälle initialisieren
+1060 GG=4000 ' Menge an geerntetem Getreide initialisieren
+1070 RG=300  ' Menge an Getreide, die von Ratten gefressen wurde
+1080 LG=GG-RG ' Menge an übrig gebliebenem Getreide berechnen
+1090 J=0     ' Jahreszahl initialisieren
+1091 L=1000  ' Größe des Landbesitzes initialisieren
+1092 DIM JZ$(15)  ' Array JZ$ für Jahreszahlen erstellen
+1093 FOR A=1 TO 15   ' Schleife für Einlesen von Jahreszahlen
+1094   READ JZ$(A)   ' Jahreszahl einlesen
+1095 NEXT A   ' Schleife fortsetzen
+1096 DATA ersten, zweiten, dritten, vierten, fuenften
+1097 DATA sechsten, siebten, achten, neunten, zehnten, elften
+1098 DATA zwoelften, dreizehnten, vierzehnten, fuenfzehnten
+1099 RETURN   ' Unterprogramm beenden
+
+2000 REM
+2010 REM *** INTERAKTION MIT NUTZER ***
+2020 REM
+2030 J=J+1   ' Jahreszahl um 1 erhöhen
+2040 PRINT "{clear}{down}";TAB(15);"{reverse on} koenig {reverse off}"
+2050 PRINT "{down}{down}jahresbericht fuer den koenig:"
+2060 PRINT "{down}wir befinden uns im ";JZ$(J);" jahr."
+2070 PRINT "{down}{down}in diesem jahr wurden:{down}"
+2080 PRINT E;TAB(6);"einwohner registriert"
+2090 PRINT EI;TAB(6);"einwanderer aufgenommen"
+2100 PRINT T;TAB(6);"personen beerdigt"
+2110 PRINT TAB(6);"{down}von deinen";L;"km^2 land{down}"
+2120 PRINT GG;TAB(6);"kg getreide geerntet;"
+2130 PRINT RG;TAB(6);"haben die ratten gefressen."
+2140 PRINT LG;TAB(6);"kg sind noch uebrig."
+2150 PRINT TAB(6);"{down}{down}bitte eine taste druecken !"
+2160 GET A$:IF A$="" THEN GOTO 2160   ' Warten, bis Nutzer eine Taste drückt
+2170 IF J=15 THEN RETURN   ' Wenn das 15. Jahr erreicht wurde, Unterprogramm beenden
+2180 LP=INT (RND(1)*27)+1   ' Zufälligen Landpreis berechnen
+2190 PRINT "{clear}{down}{down}{down}landpreis:";LP;"kg getreide"
+2200 PRINT "getreidevorrat:";LG;"kg"
+2210 PRINT "{down}{down}wie viele km^2 land moechten sie dazu-"
+2220 PRINT "kaufen ? derzeitiger besitz:";L;"km^2"
+2230 AN=0:INPUT "in km^2 ";AN   ' Nutzer nach Kaufmenge fragen
+2240 IF AN*LP<LG THEN GOTO 2260   ' Prüfen, ob Getreidemenge ausreicht
+2250 PRINT "schulden duerfen sie keine machen !":GOTO 2230   ' Nutzer informieren, falls Getreidemenge nicht ausreicht
+2260 IF AN>0 THEN L=L+AN:LG=LG-AN*LP   ' Landbesitz erhöhen und Getreidemenge reduzieren
+2270 PRINT "{down}neuer getreidevorrat:";LG;"kg"
+2280 PRINT "{down}wieviel davon soll an die";E
+2290 PRINT "einwohner verteilt werden ?"
+2300 AN=0:INPUT "in kg ";AN   ' Nutzer nach Verteilungsmenge fragen
+2310 IF AN>LG THEN PRINT "soviel haben sie gar nicht !":GOTO 2300   ' Nutzer informieren, falls Verteilungsmenge zu hoch
+2320 IF AN<10 THEN PRINT "die menschen werden verhungern !":GOTO 2300   ' Nutzer informieren, falls Verteilungsmenge zu niedrig
+2330 IF LG-AN<2 THEN PRINT "behalten sie einen kleinen vorrat !":GOTO 2300   ' Nutzer informieren, falls zu wenig Getreide übrig bleibt
+2340 LG=LG-AN   ' Getreidemenge reduzieren
+2350 PRINT "{down}neuer getreidevorrat:";LG;"kg"
+2360 PRINT "{down}{down}bitte eine taste druecken ..."
+2370 GET A$:IF A$="" THEN GOTO 2370   ' Warten, bis Nutzer eine Taste drückt
+2380 T=INT (RND(1)*(0.5*E))   ' Zufällige Anzahl von Todesfällen berechnen
+2390 IF T<0.2*E THEN GOTO 2410   ' Wenn zu wenige Todesfälle, zum nächsten Schritt springen
+2400 PRINT "{down}es sind zu viele menschen gestorben !"
+2410 E=E-T   ' Einwohnerzahl reduzieren
+2420 EI=INT (RND(1)*5)   ' Zufällige Anzahl von Einwanderern berechnen
+2430 E=E+EI   ' Einwohnerzahl erhöhen
+2440 PRINT "{down}{down}einwohner:";E
+2450 GOTO 2030   ' Zum Anfang des Unterprogramms springen
+
+3000 REM
+3010 REM *** SPIELENDE ***
+3020 REM
+3030 PRINT "{down}{down}nochmal spielen ? (j/n)"
+3040 INPUT A$
+3050 IF A$="j" THEN GOTO 70   ' Wenn Nutzer "j" eingibt, zum Anfang des Programms springen
+3060 END   ' Programm beenden
+
+

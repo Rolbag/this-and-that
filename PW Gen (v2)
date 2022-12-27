@@ -1,0 +1,24 @@
+<?php
+
+// Erstelle eine Liste aller Zeichen, die für den zufälligen String verwendet werden sollen
+$characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+// Erstelle einen leeren String, der später mit den zufällig ausgewählten Zeichen gefüllt wird
+$random_string = "";
+
+// Erstelle eine Schleife, die 16 Iterationen ausführt
+for ($i = 0; $i < 16; $i++) {
+  // Wähle ein zufälliges Zeichen aus der Liste "characters" aus
+  $random_char = $characters[mt_rand(0, strlen($characters) - 1)];
+  
+  // Füge das zufällig ausgewählte Zeichen dem String "random_string" hinzu
+  $random_string .= $random_char;
+}
+
+// Gebe den zufälligen String aus
+echo $random_string;
+
+?>
+
+
+Dieser Code erstellt den gleichen 16-Zeichen-String wie der ursprüngliche Code, aber er verwendet eine Schleife anstelle von Funktionen wie "create_function" und "array_map", um die Zeichen zufällig auszuwählen und zu einem String zusammenzufügen. Diese Änderungen könnten den Code einfacher zu verstehen und zu warten machen.

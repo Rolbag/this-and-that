@@ -1,0 +1,21 @@
+<?php
+// Öffne die Datei "b" und speichere ihren Inhalt in einem Array namens $a
+$a=file("b");
+
+// Iteriere über jedes Element im Array $a
+foreach($a AS $b){
+  // Trenne das Element $b an jedem "|"-Zeichen und speichere das Ergebnis in einem Array namens $c
+  $c=explode("|",$b);
+  
+  // Gebe den Inhalt von $c[0] in fett gedruckter Schrift aus
+  echo"<b>$c[0]</b><br>";
+  
+  // Gebe den Inhalt von $c[1] aus
+  echo"$c[1]<br><br>";
+}
+
+// Schließe die PHP-Codeblock
+?>
+
+
+Dieser Code liest eine Datei ein und iteriert über jede Zeile in der Datei. Jede Zeile wird an dem "|"-Zeichen getrennt und die beiden Teile werden ausgegeben. Der Inhalt von $c[0] wird in fett gedruckter Schrift ausgegeben, während der Inhalt von $c[1] normal ausgegeben wird. Zwischen jeder Ausgabe wird eine Zeile und zwei Leerzeichen hinzugefügt.
